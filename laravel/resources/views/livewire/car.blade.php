@@ -23,7 +23,7 @@
             <div class="mb-6">
                 <label for="price" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Your
                     Price</label>
-                <input wire:model="price"type="number" id="price"
+                <input wire:model="price" type="number" id="price"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     required="">
             </div>
@@ -62,42 +62,70 @@
                 </thead>
                 <tbody>
                     @forelse ($cars as $car)
-
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                             <th scope="row"
                                 class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
                                 {{ $loop->iteration }}
                             </th>
-                            <td class="px-6 py-4">
-                                {{ $car->name }}
-                            </td>
-                            <td class="px-6 py-4">
-                                {{ $car->model }}
-                            </td>
-                            <td class="px-6 py-4">
-                                {{ $car->price }}
-                            </td>
-                            <td class="px-6 py-4 text-right">
-                                <button type="button" wire:click="edit({{ $car->id }})"
-                                    class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Edit</button>
-                            </td>
+                            @if ($editId == $car->id)
+                                <td class="px-6 py-4 text-right">
+                                    <input wire:model="name" type="text" id="name"
+                                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                        placeholder="" required>
+                                </td>
 
-                            <td class="px-6 py-4 text-right">
-                                <button type="button" wire:click="delete({{ $car->id }})"
-                                    class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Delet</button>
-                            </td>
+                                <td class="px-6 py-4 text-right">
+                                    <input wire:model="model" type="number" id="model"
+                                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                        required>
+                                </td>
+                                <td class="px-6 py-4 text-right">
+                                    <input wire:model="price" type="number" id="price"
+                                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                        required>
+                                </td>
+                                <td class="px-6 py-4 text-right">
+                                    <button wire:click="update({{ $car->id }})" type="button"
+                                        class="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">save</button>
+                                </td>
+                                <td class="px-6 py-4 text-right">
+                                    <button wire:click="$set('editId', {{ null }})" type="button"
+                                        class="text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">close</button>
+                                </td>
+                                <td class="px-6 py-4 text-right">
+
+                                </td>
+                            @else
+                                <td class="px-6 py-4">
+                                    {{ $car->name }}
+                                </td>
+                                <td class="px-6 py-4">
+                                    {{ $car->model }}
+                                </td>
+                                <td class="px-6 py-4">
+                                    {{ $car->price }}
+                                </td>
+                                <td class="px-6 py-4 text-right">
+                                    <button type="button" wire:click="edit({{ $car->id }})"
+                                        class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Edit</button>
+                                </td>
+
+                                <td class="px-6 py-4 text-right">
+                                    <button type="button" wire:click="delete({{ $car->id }})"
+                                        class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Delet</button>
+                                </td>
+                                @endif
                         </tr>
-                        @empty 
-                        <td>
-                            No Cars
-                        </td>
-
+                        @empty
+                            <td>
+                                No Cars
+                            </td>
                         @endforelse
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
+
+
         </div>
 
-
     </div>
-
-</div>
