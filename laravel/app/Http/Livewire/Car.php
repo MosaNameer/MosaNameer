@@ -14,6 +14,12 @@ protected $listeners = [
     
 public $name,  $model , $price , $editId = null;
 
+public function delete($id)
+    {
+        modelCar::findOrFail($id)->delete();
+        $this->emitTo('Car', '$refresh');
+    }
+
 public function edit($id)
     {
         $cars = modelCar::findOrFail($id);
@@ -36,7 +42,7 @@ public function edit($id)
 
 public function add()
 {
-    Car::create([
+    modelCar::create([
         'name' => $this->name,
         'model' => $this->model,
         'price' => $this->price,
