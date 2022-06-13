@@ -21,7 +21,6 @@
                     <x-jet-nav-link href="{{ route('car') }}" :active="request()->routeIs('car')">
                         car
                     </x-jet-nav-link>
-
                 </div>
             </div>
 
